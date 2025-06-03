@@ -1,0 +1,28 @@
+# Ignore Python cache (if using Python services)
+__pycache__/
+*.pyc
+
+# Node.js
+node_modules/
+
+# Docker
+*.log
+*.pid
+*.sock
+
+# Helm
+charts/*/charts/
+charts/*/tmpcharts/
+charts/*/Chart.lock
+
+# Kubernetes
+*.crt
+*.key
+*.pem
+*.kubeconfig
+.kube/
+.kubectl/
+
+# Gitpod-specific
+.gitpod.Dockerfile
+workspace-storage/
