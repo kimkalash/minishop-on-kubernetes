@@ -10,7 +10,8 @@ app = FastAPI(
 
 # Include auth routes (login, register, etc.)
 app.include_router(auth_router, prefix="/auth")
-
 @app.get("/")
 def health_check():
     return {"status": "auth-service is running", "env": settings.database_url}
+
+
