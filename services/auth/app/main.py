@@ -14,4 +14,3 @@ app.include_router(auth_router, prefix="/auth")
 def health_check():
     return {"status": "auth-service is running", "env": settings.database_url}
 
-
