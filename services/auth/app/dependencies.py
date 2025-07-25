@@ -8,6 +8,7 @@ from app.crud import get_user_by_username
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
+
 async def get_current_user(
     token: str = Depends(oauth2_scheme),
     db: AsyncSession = Depends(get_db),
@@ -21,12 +22,13 @@ async def get_current_user(
     try:
         payload = jwt.decode(token, settings.jwt_secret, algorithms=[settings.jwt_algorithm])
         username: str = payload.get("sub")
-        if username is None:
+        if not username:
             raise credentials_exception
     except JWTError:
         raise credentials_exception
 
     user = await get_user_by_username(db, username)
-    if user is None:
+    if not user:
         raise credentials_exception
+
     return user
