@@ -1,7 +1,7 @@
 # app/routes.py
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from aioredis import Redis
+from redis.asyncio import Redis
 from typing import List
 
 from app.schemas import CartItemCreate, CartItemResponse, CartResponse

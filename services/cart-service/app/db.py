@@ -1,22 +1,13 @@
-# app/db.py
-import aioredis
+import redis.asyncio as redis
 from typing import AsyncGenerator
-from fastapi import Depends
+from redis.asyncio import Redis  # <-- Import Redis class here
 
-# Redis connection URL, typically read from env (for now hardcoded example)
 REDIS_URL = "redis://localhost:6379"
 
-# Create Redis client instance, but connection is lazy (not connected yet)
-redis = aioredis.from_url(REDIS_URL, encoding="utf-8", decode_responses=True)
+redis_client = redis.from_url(REDIS_URL, encoding="utf-8", decode_responses=True)
 
-async def get_redis() -> AsyncGenerator[aioredis.Redis, None]:
-    """
-    FastAPI dependency that provides a Redis client instance for request handlers.
-    Ensures proper connection lifecycle management.
-    """
+async def get_redis() -> AsyncGenerator[Redis, None]:
     try:
-        yield redis
+        yield redis_client
     finally:
-        # Connection cleanup (optional for aioredis, but good practice)
-        await redis.close()
-        await redis.wait_closed()
+        await redis_client.close()

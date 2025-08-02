@@ -1,7 +1,7 @@
 # app/crud.py
 from typing import List, Optional
 import json
-from aioredis import Redis
+from redis.asyncio import Redis
 from app.schemas import CartItemCreate, CartItemResponse
 
 CART_PREFIX = "cart:"  # Redis key prefix for carts
