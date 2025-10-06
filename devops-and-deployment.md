@@ -24,7 +24,7 @@ The goal is to ensure reliability, automation, and scalability across all enviro
 3. On success, the image is pushed to Docker Hub or GitHub Container Registry.  
 
 ### Example CI Job (simplified)
-```yaml
+
 name: CI
 on: [push, pull_request]
 
