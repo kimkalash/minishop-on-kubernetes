@@ -3,58 +3,58 @@
 ## 1. Overview
 
 Minishop is built as a collection of independent microservices.  
-Each service is responsible for a specific business domain and communicates with others through HTTP APIs or events.  
+Each service is responsible for a specific business domain and communicates with others through HTTP APIs or internal events.  
 This modular structure allows scalability, easier maintenance, and independent deployments.
 
 ---
 
 ## 2. Service Diagram
 
-The following diagram represents the logical flow between services.
+The diagram below shows the logical flow between services.
 
-            +----------------------+
-            |      Auth Service    |
-            |  User accounts       |
-            |  JWT authentication  |
-            +----------+-----------+
-                       |
-                       v
-      +-----------------------------------+
-      |            API Gateway            |
-      | Routes external requests to       |
-      | internal services securely.       |
-      +-----------+-----------+-----------+
-                  |           |
-    +-------------+           +-------------+
-    v                                       v
-+------------------+ +------------------+
-| Catalog Service | | Cart Service |
-| Product details | | User carts |
-| Pricing, stock | | Redis cache |
-+--------+---------+ +--------+---------+
-| |
-v v
-+------------------+ +------------------+
-| Orders Service |------------------>| Payments Service |
-| Checkout, status | Payment updates | Mock processor |
-| History | | |
-+--------+---------+ +------------------+
-|
-v
-+------------------+
-| Shipping Service |
-| Shipments, |
-| Tracking updates |
-+--------+---------+
-|
-v
-+------------------+
-| Notifications |
-| Email and SMS |
-+------------------+
+```text
+                         +----------------------+
+                         |      Auth Service    |
+                         |  User accounts       |
+                         |  JWT authentication  |
+                         +----------+-----------+
+                                    |
+                                    v
+                      +-------------------------------+
+                      |          API Gateway          |
+                      | Routes external requests to   |
+                      | internal services securely.   |
+                      +----+---------------+----------+
+                           |               |
+          +----------------+               +----------------+
+          v                                                 v
++----------------------+                          +----------------------+
+|   Catalog Service    |                          |    Cart Service      |
+| - Product details    |                          | - User carts         |
+| - Pricing, stock     |                          | - Redis cache        |
++----------+-----------+                          +----------+-----------+
+           |                                               |
+           v                                               v
++----------------------+                          +----------------------+
+|    Orders Service    |------------------------->|   Payments Service   |
+| - Checkout           |  payment status updates  | - Mock processor     |
+| - Order tracking     |                          | - External API ready |
++----------+-----------+                          +----------------------+
+           |
+           v
++----------------------+
+|   Shipping Service   |
+| - Shipments          |
+| - Tracking updates   |
++----------+-----------+
+           |
+           v
++----------------------+
+| Notifications Service|
+| - Email and SMS      |
+| - Alerts and logs    |
++----------------------+
 
-
----
 
 ## 3. Service Roles and Responsibilities
 
